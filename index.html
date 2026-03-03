@@ -25,7 +25,7 @@
             background: white;
             border-radius: 20px;
             padding: 40px;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
@@ -92,10 +92,6 @@
         
         .result {
             margin-top: 30px;
-            padding: 25px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            border-left: 4px solid #667eea;
             display: none;
         }
         
@@ -115,10 +111,32 @@
             }
         }
         
-        .result h2 {
-            font-size: 20px;
+        .tier-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .pricing-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
             margin-bottom: 15px;
-            color: #1a1a1a;
+            border-left: 4px solid #667eea;
+        }
+        
+        .pricing-section h3 {
+            font-size: 16px;
+            color: #667eea;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
         
         .price-row {
@@ -130,50 +148,68 @@
         
         .price-row:last-child {
             border-bottom: none;
-            margin-top: 10px;
-            padding-top: 15px;
-            font-weight: 700;
-            font-size: 18px;
-            color: #667eea;
         }
         
         .price-label {
             color: #666;
+            font-size: 14px;
         }
         
         .price-value {
             font-weight: 600;
             color: #1a1a1a;
+            font-size: 16px;
         }
         
-        .tier-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #667eea;
-            color: white;
-            border-radius: 20px;
-            font-size: 12px;
+        .total-row {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .total-row .price-label {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
             font-weight: 600;
-            margin-bottom: 15px;
+        }
+        
+        .total-row .price-value {
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
         }
         
         .note {
             margin-top: 15px;
-            padding: 12px;
+            padding: 15px;
             background: #fff3cd;
             border-radius: 8px;
             font-size: 13px;
             color: #856404;
+            line-height: 1.6;
+        }
+        
+        .breakdown {
+            margin-top: 10px;
+            padding: 12px;
+            background: #e8f4f8;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #0c5460;
         }
     </style>
 </head>
 <body>
     <div class="calculator">
         <h1>Kellan Pricing Calculator</h1>
-        <p class="subtitle">Calculate monthly pricing based on call volume</p>
+        <p class="subtitle">Calculate setup + monthly pricing based on total call volume</p>
         
         <div class="input-group">
-            <label for="calls">Monthly Call Volume</label>
+            <label for="calls">Total Monthly Calls</label>
             <input type="number" id="calls" placeholder="e.g., 150" min="0">
         </div>
         
@@ -181,19 +217,40 @@
         
         <div class="result" id="result">
             <div id="tier-badge"></div>
-            <h2>Monthly Pricing</h2>
-            <div class="price-row">
-                <span class="price-label">Base Fee</span>
-                <span class="price-value" id="base-fee">$0</span>
+            
+            <!-- Setup Fee Section -->
+            <div class="pricing-section">
+                <h3>One-Time Setup</h3>
+                <div class="price-row">
+                    <span class="price-label">Setup Fee</span>
+                    <span class="price-value" id="setup-fee">$0</span>
+                </div>
             </div>
-            <div class="price-row">
-                <span class="price-label">Overage Charges</span>
-                <span class="price-value" id="overage">$0</span>
+            
+            <!-- Monthly Fee Section -->
+            <div class="pricing-section">
+                <h3>Monthly Recurring</h3>
+                <div class="price-row">
+                    <span class="price-label">Base Fee</span>
+                    <span class="price-value" id="base-fee">$0</span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label">Overage Charges</span>
+                    <span class="price-value" id="overage">$0</span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label"><strong>Monthly Total</strong></span>
+                    <span class="price-value" id="monthly-total">$0</span>
+                </div>
+                <div class="breakdown" id="breakdown"></div>
             </div>
-            <div class="price-row">
-                <span class="price-label">Total Monthly Price</span>
-                <span class="price-value" id="total">$0</span>
+            
+            <!-- Total First Payment -->
+            <div class="total-row">
+                <span class="price-label">FIRST PAYMENT (Setup + Month 1)</span>
+                <span class="price-value" id="first-payment">$0</span>
             </div>
+            
             <div class="note" id="note"></div>
         </div>
     </div>
@@ -207,49 +264,69 @@
                 return;
             }
             
-            let tier, base, included, overageRate, cap;
+            let tier, base, included, overageRate, cap, setupFee;
             
-            // Determine tier
+            // Determine tier and setup fee
             if (calls <= 25) {
                 tier = 'STARTER';
                 base = 297;
                 included = 25;
                 overageRate = 12;
                 cap = 600;
+                setupFee = 297;
             } else if (calls <= 60) {
                 tier = 'GROWTH';
                 base = 497;
                 included = 60;
                 overageRate = 10;
                 cap = 900;
+                setupFee = 497;
             } else if (calls <= 120) {
                 tier = 'PRO';
                 base = 697;
                 included = 120;
                 overageRate = 8;
                 cap = 1200;
+                setupFee = 897;
             } else {
                 tier = 'SCALE';
                 base = 997;
                 included = 180;
                 overageRate = 6;
                 cap = 1500;
+                setupFee = 1497;
             }
             
             // Calculate overage
             const extraCalls = Math.max(0, calls - included);
             const rawOverage = extraCalls * overageRate;
-            const finalOverage = Math.min(rawOverage, cap - base);
-            const total = base + finalOverage;
+            const cappedOverage = cap - base;
+            const finalOverage = Math.min(rawOverage, cappedOverage);
+            const monthlyTotal = base + finalOverage;
+            
+            // Calculate first payment
+            const firstPayment = setupFee + monthlyTotal;
             
             // Display results
             document.getElementById('tier-badge').innerHTML = `<span class="tier-badge">${tier} TIER</span>`;
-            document.getElementById('base-fee').textContent = `$${base}`;
-            document.getElementById('overage').textContent = `$${finalOverage}`;
-            document.getElementById('total').textContent = `$${total}`;
+            document.getElementById('setup-fee').textContent = `$${setupFee.toLocaleString()}`;
+            document.getElementById('base-fee').textContent = `$${base.toLocaleString()}`;
+            document.getElementById('overage').textContent = `$${finalOverage.toLocaleString()}`;
+            document.getElementById('monthly-total').textContent = `$${monthlyTotal.toLocaleString()}`;
+            document.getElementById('first-payment').textContent = `$${firstPayment.toLocaleString()}`;
+            
+            // Add breakdown
+            let breakdownText = `${calls} total calls/month • ${included} included • ${extraCalls} overage`;
+            if (extraCalls > 0) {
+                breakdownText += ` @ $${overageRate}/call`;
+            }
+            document.getElementById('breakdown').textContent = breakdownText;
             
             // Add note
-            let noteText = `Price is locked for 12 months. Based on ${calls} calls/month (${included} included, ${extraCalls} overage).`;
+            let noteText = `💰 Setup fee: $${setupFee.toLocaleString()} (one-time)\n`;
+            noteText += `📅 Monthly: $${monthlyTotal.toLocaleString()} (locked for 12 months)\n`;
+            noteText += `✅ First payment: $${firstPayment.toLocaleString()} (setup + month 1)\n`;
+            noteText += `🔄 Recurring: $${monthlyTotal.toLocaleString()}/month thereafter`;
             document.getElementById('note').textContent = noteText;
             
             // Show result
