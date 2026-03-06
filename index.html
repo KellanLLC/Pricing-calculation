@@ -324,7 +324,7 @@
             
             // Add note
             let noteText = `💰 Setup fee: $${setupFee.toLocaleString()} (one-time)\n`;
-            noteText += `📅 Monthly: $${monthlyTotal.toLocaleString()} (locked for 12 months)\n`;
+            noteText += `📅 Monthly: $${monthlyTotal.toLocaleString()} (month-to-month, cancel anytime)\n`;
             noteText += `✅ First payment: $${firstPayment.toLocaleString()} (setup + month 1)\n`;
             noteText += `🔄 Recurring: $${monthlyTotal.toLocaleString()}/month thereafter`;
             document.getElementById('note').textContent = noteText;
