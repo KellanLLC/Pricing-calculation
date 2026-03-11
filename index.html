@@ -303,29 +303,43 @@
     padding-top: 11px;
     border-top: 1px dashed rgba(255,255,255,.10);
     display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .setup-row {
+    display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
+  }
+
+  .setup-row.first-payment {
+    margin-top: 2px;
+    padding-top: 7px;
+    border-top: 1px solid rgba(255,255,255,.08);
   }
 
   .setup-label {
     font-size: 11px;
     color: var(--muted);
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
     font-weight: 600;
   }
 
+  .setup-label.highlight { color: var(--accent2); }
+
   .setup-val {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--text);
   }
 
-  .setup-cap {
-    font-size: 10px;
-    opacity: .45;
-    font-weight: 400;
+  .setup-val.highlight {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent2);
   }
 
   /* ── FOOTER ── */
@@ -384,11 +398,11 @@
     <div class="card-rows">
       <div class="card-row"><span class="row-label">Included calls</span><span class="row-val">19</span></div>
       <div class="card-row"><span class="row-label">Overage / call</span><span class="row-val green">$14</span></div>
-      <div class="card-row"><span class="row-label">Bill cap</span><span class="row-val">$297</span></div>
     </div>
     <div class="card-setup">
-      <span class="setup-label">One-time setup</span>
-      <span class="setup-val">$197</span>
+      <div class="setup-row"><span class="setup-label">Setup</span><span class="setup-val">$197</span></div>
+      <div class="setup-row"><span class="setup-label">Retainer</span><span class="setup-val">$197 / mo</span></div>
+      <div class="setup-row first-payment"><span class="setup-label highlight">First Payment</span><span class="setup-val highlight">$394</span></div>
     </div>
   </div>
 
@@ -401,11 +415,11 @@
     <div class="card-rows">
       <div class="card-row"><span class="row-label">Included calls</span><span class="row-val">25</span></div>
       <div class="card-row"><span class="row-label">Overage / call</span><span class="row-val green">$12</span></div>
-      <div class="card-row"><span class="row-label">Bill cap</span><span class="row-val">$497</span></div>
     </div>
     <div class="card-setup">
-      <span class="setup-label">One-time setup</span>
-      <span class="setup-val">$297</span>
+      <div class="setup-row"><span class="setup-label">Setup</span><span class="setup-val">$297</span></div>
+      <div class="setup-row"><span class="setup-label">Retainer</span><span class="setup-val">$297 / mo</span></div>
+      <div class="setup-row first-payment"><span class="setup-label highlight">First Payment</span><span class="setup-val highlight">$594</span></div>
     </div>
   </div>
 
@@ -419,11 +433,11 @@
     <div class="card-rows">
       <div class="card-row"><span class="row-label">Included calls</span><span class="row-val">60</span></div>
       <div class="card-row"><span class="row-label">Overage / call</span><span class="row-val green">$10</span></div>
-      <div class="card-row"><span class="row-label">Bill cap</span><span class="row-val">$697</span></div>
     </div>
     <div class="card-setup">
-      <span class="setup-label">One-time setup</span>
-      <span class="setup-val">$497</span>
+      <div class="setup-row"><span class="setup-label">Setup</span><span class="setup-val">$497</span></div>
+      <div class="setup-row"><span class="setup-label">Retainer</span><span class="setup-val">$497 / mo</span></div>
+      <div class="setup-row first-payment"><span class="setup-label highlight">First Payment</span><span class="setup-val highlight">$994</span></div>
     </div>
   </div>
 
@@ -436,11 +450,11 @@
     <div class="card-rows">
       <div class="card-row"><span class="row-label">Included calls</span><span class="row-val">120</span></div>
       <div class="card-row"><span class="row-label">Overage / call</span><span class="row-val green">$8</span></div>
-      <div class="card-row"><span class="row-label">Bill cap</span><span class="row-val">$997</span></div>
     </div>
     <div class="card-setup">
-      <span class="setup-label">One-time setup</span>
-      <span class="setup-val">$697</span>
+      <div class="setup-row"><span class="setup-label">Setup</span><span class="setup-val">$697</span></div>
+      <div class="setup-row"><span class="setup-label">Retainer</span><span class="setup-val">$697 / mo</span></div>
+      <div class="setup-row first-payment"><span class="setup-label highlight">First Payment</span><span class="setup-val highlight">$1,394</span></div>
     </div>
   </div>
 
@@ -453,11 +467,11 @@
     <div class="card-rows">
       <div class="card-row"><span class="row-label">Included calls</span><span class="row-val">180</span></div>
       <div class="card-row"><span class="row-label">Overage / call</span><span class="row-val green">$6</span></div>
-      <div class="card-row"><span class="row-label">Bill cap</span><span class="row-val">$1,500</span></div>
     </div>
     <div class="card-setup">
-      <span class="setup-label">One-time setup</span>
-      <span class="setup-val">$897 <span class="setup-cap">(capped)</span></span>
+      <div class="setup-row"><span class="setup-label">Setup</span><span class="setup-val">$997</span></div>
+      <div class="setup-row"><span class="setup-label">Retainer</span><span class="setup-val">$997 / mo</span></div>
+      <div class="setup-row first-payment"><span class="setup-label highlight">First Payment</span><span class="setup-val highlight">$1,994</span></div>
     </div>
   </div>
 
@@ -492,8 +506,9 @@
 
     const extra = Math.max(0, calls - tier.included);
     const bill  = tier.monthly + Math.min(extra * tier.overage, tier.cap - tier.monthly);
+    const first = tier.monthly + bill; // setup = monthly (no cap)
 
-    tag.textContent = tier.name + ' · ~$' + bill.toLocaleString() + '/mo';
+    tag.textContent = tier.name + ' · $' + bill.toLocaleString() + '/mo · First: $' + first.toLocaleString();
     tag.classList.add('visible');
     document.getElementById('c-' + tier.id).classList.add('active');
   }
