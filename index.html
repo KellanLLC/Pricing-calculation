@@ -1,344 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kellan Pricing Calculator</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .calculator {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        
-        h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-            color: #1a1a1a;
-        }
-        
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-        
-        .input-group {
-            margin-bottom: 25px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-            font-size: 14px;
-        }
-        
-        input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        .calculate-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .calculate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-        
-        .calculate-btn:active {
-            transform: translateY(0);
-        }
-        
-        .result {
-            margin-top: 30px;
-            display: none;
-        }
-        
-        .result.show {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .tier-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: #667eea;
-            color: white;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-        
-        .pricing-section {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 15px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .pricing-section h3 {
-            font-size: 16px;
-            color: #667eea;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .price-row:last-child {
-            border-bottom: none;
-        }
-        
-        .price-label {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .price-value {
-            font-weight: 600;
-            color: #1a1a1a;
-            font-size: 16px;
-        }
-        
-        .total-row {
-            margin-top: 20px;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .total-row .price-label {
-            color: rgba(255,255,255,0.9);
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .total-row .price-value {
-            color: white;
-            font-size: 28px;
-            font-weight: 700;
-        }
-        
-        .note {
-            margin-top: 15px;
-            padding: 15px;
-            background: #fff3cd;
-            border-radius: 8px;
-            font-size: 13px;
-            color: #856404;
-            line-height: 1.6;
-        }
-        
-        .breakdown {
-            margin-top: 10px;
-            padding: 12px;
-            background: #e8f4f8;
-            border-radius: 6px;
-            font-size: 12px;
-            color: #0c5460;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kellan LLC — Pricing</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0b0d10;
+    --surface:  rgba(18,24,38,.85);
+    --surface2: rgba(255,255,255,.04);
+    --border:   rgba(255,255,255,.10);
+    --text:     #eaf0ff;
+    --muted:    #c4cfe8;
+    --accent:   #7c5cff;
+    --accent2:  #23c6ff;
+    --good:     #39d98a;
+    --radius:   15px;
+    --shadow:   0 10px 28px rgba(0,0,0,.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    background:
+      radial-gradient(900px 500px at 15% -5%,  rgba(124,92,255,.20), transparent 60%),
+      radial-gradient(700px 420px at 92% 12%, rgba(35,198,255,.11), transparent 55%),
+      var(--bg);
+    font-family: 'Syne', sans-serif;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 13px 20px 10px;
+    gap: 10px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: 12px;
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+
+  .logo-img {
+    height: 44px;
+    width: 44px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(124,92,255,.5));
+  }
+
+  .brand-name {
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: -.2px;
+    color: var(--text);
+  }
+
+  .brand-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .5px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .finder {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px 16px;
+    backdrop-filter: blur(10px);
+    transition: border-color .2s;
+  }
+  .finder:focus-within { border-color: var(--accent); }
+
+  .finder label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .finder input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text);
+    width: 58px;
+    text-align: center;
+  }
+  .finder input::placeholder { color: #333; }
+
+  .finder-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    padding: 5px 13px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    letter-spacing: .5px;
+    white-space: nowrap;
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    transition: opacity .25s, max-width .3s;
+  }
+  .finder-tag.visible { opacity: 1; max-width: 280px; }
+
+  .page-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ── CARDS ── */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow);
+    padding: 18px 16px 15px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+    animation: fadeUp .45s ease both;
+  }
+
+  .card:nth-child(1){animation-delay:.04s}
+  .card:nth-child(2){animation-delay:.08s}
+  .card:nth-child(3){animation-delay:.12s}
+  .card:nth-child(4){animation-delay:.16s}
+  .card:nth-child(5){animation-delay:.20s}
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(16px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--border);
+    transition: background .2s;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  .card.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent), 0 8px 32px rgba(124,92,255,.18);
+    transform: translateY(-3px);
+  }
+  .card.active::before {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .card.popular {
+    background: linear-gradient(160deg, rgba(124,92,255,.22) 0%, rgba(18,24,38,.95) 60%);
+    border-color: rgba(124,92,255,.45);
+  }
+  .card.popular::before {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .card.popular.active {
+    border-color: var(--accent2);
+    box-shadow: 0 0 0 1px var(--accent2), 0 8px 32px rgba(35,198,255,.18);
+  }
+
+  .pop-badge {
+    position: absolute;
+    top: 11px; right: 11px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .card-tier {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+  .card.popular .card-tier { color: var(--accent2); }
+
+  .card-range {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 11px;
+    letter-spacing: .3px;
+  }
+  .card.popular .card-range { color: rgba(35,198,255,.6); }
+
+  .card-price {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 3px;
+  }
+
+  .card-period {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-bottom: 13px;
+  }
+
+  .card-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 12px;
+  }
+  .card.popular .card-divider { background: rgba(124,92,255,.3); }
+
+  .card-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    flex: 1;
+  }
+
+  .card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .row-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .row-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .row-val.green { color: var(--good); }
+
+  .card-setup {
+    margin-top: auto;
+    padding-top: 11px;
+    border-top: 1px dashed rgba(255,255,255,.10);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .setup-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+  }
+
+  .setup-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .setup-cap {
+    font-size: 10px;
+    opacity: .45;
+    font-weight: 400;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    padding: 0 2px;
+    gap: 12px;
+  }
+
+  .overage-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .overage-note strong { color: var(--good); font-weight: 500; }
+
+  .footer-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #4a5572;
+    white-space: nowrap;
+  }
+</style>
 </head>
 <body>
-    <div class="calculator">
-        <h1>Kellan Pricing Calculator</h1>
-        <p class="subtitle">Calculate setup + monthly pricing based on total call volume</p>
-        
-        <div class="input-group">
-            <label for="calls">Total Monthly Calls</label>
-            <input type="number" id="calls" placeholder="e.g., 150" min="0">
-        </div>
-        
-        <button class="calculate-btn" onclick="calculatePrice()">Calculate Price</button>
-        
-        <div class="result" id="result">
-            <div id="tier-badge"></div>
-            
-            <!-- Setup Fee Section -->
-            <div class="pricing-section">
-                <h3>One-Time Setup</h3>
-                <div class="price-row">
-                    <span class="price-label">Setup Fee</span>
-                    <span class="price-value" id="setup-fee">$0</span>
-                </div>
-            </div>
-            
-            <!-- Monthly Fee Section -->
-            <div class="pricing-section">
-                <h3>Monthly Recurring</h3>
-                <div class="price-row">
-                    <span class="price-label">Base Fee</span>
-                    <span class="price-value" id="base-fee">$0</span>
-                </div>
-                <div class="price-row">
-                    <span class="price-label">Overage Charges</span>
-                    <span class="price-value" id="overage">$0</span>
-                </div>
-                <div class="price-row">
-                    <span class="price-label"><strong>Monthly Total</strong></span>
-                    <span class="price-value" id="monthly-total">$0</span>
-                </div>
-                <div class="breakdown" id="breakdown"></div>
-            </div>
-            
-            <!-- Total First Payment -->
-            <div class="total-row">
-                <span class="price-label">FIRST PAYMENT (Setup + Month 1)</span>
-                <span class="price-value" id="first-payment">$0</span>
-            </div>
-            
-            <div class="note" id="note"></div>
-        </div>
-    </div>
 
-    <script>
-        function calculatePrice() {
-            const calls = parseInt(document.getElementById('calls').value);
-            
-            if (isNaN(calls) || calls < 0) {
-                alert('Please enter a valid number of calls');
-                return;
-            }
-            
-            let tier, base, included, overageRate, cap, setupFee;
-            
-            // Determine tier and setup fee
-            if (calls <= 25) {
-                tier = 'STARTER';
-                base = 297;
-                included = 25;
-                overageRate = 12;
-                cap = 600;
-                setupFee = 297;
-            } else if (calls <= 60) {
-                tier = 'GROWTH';
-                base = 497;
-                included = 60;
-                overageRate = 10;
-                cap = 900;
-                setupFee = 497;
-            } else if (calls <= 120) {
-                tier = 'PRO';
-                base = 697;
-                included = 120;
-                overageRate = 8;
-                cap = 1200;
-                setupFee = 897;
-            } else {
-                tier = 'SCALE';
-                base = 997;
-                included = 180;
-                overageRate = 6;
-                cap = 1500;
-                setupFee = 1497;
-            }
-            
-            // Calculate overage
-            const extraCalls = Math.max(0, calls - included);
-            const rawOverage = extraCalls * overageRate;
-            const cappedOverage = cap - base;
-            const finalOverage = Math.min(rawOverage, cappedOverage);
-            const monthlyTotal = base + finalOverage;
-            
-            // Calculate first payment
-            const firstPayment = setupFee + monthlyTotal;
-            
-            // Display results
-            document.getElementById('tier-badge').innerHTML = `<span class="tier-badge">${tier} TIER</span>`;
-            document.getElementById('setup-fee').textContent = `$${setupFee.toLocaleString()}`;
-            document.getElementById('base-fee').textContent = `$${base.toLocaleString()}`;
-            document.getElementById('overage').textContent = `$${finalOverage.toLocaleString()}`;
-            document.getElementById('monthly-total').textContent = `$${monthlyTotal.toLocaleString()}`;
-            document.getElementById('first-payment').textContent = `$${firstPayment.toLocaleString()}`;
-            
-            // Add breakdown
-            let breakdownText = `${calls} total calls/month • ${included} included • ${extraCalls} overage`;
-            if (extraCalls > 0) {
-                breakdownText += ` @ $${overageRate}/call`;
-            }
-            document.getElementById('breakdown').textContent = breakdownText;
-            
-            // Add note
-            let noteText = `💰 Setup fee: $${setupFee.toLocaleString()} (one-time)\n`;
-            noteText += `📅 Monthly: $${monthlyTotal.toLocaleString()} (month-to-month, cancel anytime)\n`;
-            noteText += `✅ First payment: $${firstPayment.toLocaleString()} (setup + month 1)\n`;
-            noteText += `🔄 Recurring: $${monthlyTotal.toLocaleString()}/month thereafter`;
-            document.getElementById('note').textContent = noteText;
-            
-            // Show result
-            document.getElementById('result').classList.add('show');
-        }
-        
-        // Allow Enter key to calculate
-        document.getElementById('calls').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                calculatePrice();
-            }
-        });
-    </script>
+<div class="header">
+  <div class="logo-area">
+    <img class="logo-img" src="logo.png" alt="Kellan LLC">
+    <div>
+      <div class="brand-name">Kellan LLC</div>
+      <div class="brand-tag">SMS Automation · CRM</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="finder">
+      <label for="ci">Monthly calls</label>
+      <input type="number" id="ci" placeholder="0" min="0" oninput="fp(this.value)">
+      <div class="finder-tag" id="ft"></div>
+    </div>
+    <div class="page-label">Pricing · Sales Ref</div>
+  </div>
+</div>
+
+<div class="cards">
+
+  <div class="card" id="c-micro">
+    <div class="card-tier">Micro</div>
+    <div class="card-range">1 – 19 calls / mo</div>
+    <div class="card-price">$197</div>
+    <div class="card-period">/ month</div>
+    <div class="card-divider"></div>
+    <div class="card-rows">
+      <div class="card-row"><span class="row-label">Included calls</span><span class="row-val">19</span></div>
+      <div class="card-row"><span class="row-label">Overage / call</span><span class="row-val green">$14</span></div>
+      <div class="card-row"><span class="row-label">Bill cap</span><span class="row-val">$297</span></div>
+    </div>
+    <div class="card-setup">
+      <span class="setup-label">One-time setup</span>
+      <span class="setup-val">$197</span>
+    </div>
+  </div>
+
+  <div class="card" id="c-starter">
+    <div class="card-tier">Starter</div>
+    <div class="card-range">20 – 25 calls / mo</div>
+    <div class="card-price">$297</div>
+    <div class="card-period">/ month</div>
+    <div class="card-divider"></div>
+    <div class="card-rows">
+      <div class="card-row"><span class="row-label">Included calls</span><span class="row-val">25</span></div>
+      <div class="card-row"><span class="row-label">Overage / call</span><span class="row-val green">$12</span></div>
+      <div class="card-row"><span class="row-label">Bill cap</span><span class="row-val">$497</span></div>
+    </div>
+    <div class="card-setup">
+      <span class="setup-label">One-time setup</span>
+      <span class="setup-val">$297</span>
+    </div>
+  </div>
+
+  <div class="card popular" id="c-growth">
+    <div class="pop-badge">Most Popular</div>
+    <div class="card-tier">Growth</div>
+    <div class="card-range">26 – 60 calls / mo</div>
+    <div class="card-price">$497</div>
+    <div class="card-period">/ month</div>
+    <div class="card-divider"></div>
+    <div class="card-rows">
+      <div class="card-row"><span class="row-label">Included calls</span><span class="row-val">60</span></div>
+      <div class="card-row"><span class="row-label">Overage / call</span><span class="row-val green">$10</span></div>
+      <div class="card-row"><span class="row-label">Bill cap</span><span class="row-val">$697</span></div>
+    </div>
+    <div class="card-setup">
+      <span class="setup-label">One-time setup</span>
+      <span class="setup-val">$497</span>
+    </div>
+  </div>
+
+  <div class="card" id="c-pro">
+    <div class="card-tier">Pro</div>
+    <div class="card-range">61 – 120 calls / mo</div>
+    <div class="card-price">$697</div>
+    <div class="card-period">/ month</div>
+    <div class="card-divider"></div>
+    <div class="card-rows">
+      <div class="card-row"><span class="row-label">Included calls</span><span class="row-val">120</span></div>
+      <div class="card-row"><span class="row-label">Overage / call</span><span class="row-val green">$8</span></div>
+      <div class="card-row"><span class="row-label">Bill cap</span><span class="row-val">$997</span></div>
+    </div>
+    <div class="card-setup">
+      <span class="setup-label">One-time setup</span>
+      <span class="setup-val">$697</span>
+    </div>
+  </div>
+
+  <div class="card" id="c-scale">
+    <div class="card-tier">Scale</div>
+    <div class="card-range">121+ calls / mo</div>
+    <div class="card-price">$997</div>
+    <div class="card-period">/ month</div>
+    <div class="card-divider"></div>
+    <div class="card-rows">
+      <div class="card-row"><span class="row-label">Included calls</span><span class="row-val">180</span></div>
+      <div class="card-row"><span class="row-label">Overage / call</span><span class="row-val green">$6</span></div>
+      <div class="card-row"><span class="row-label">Bill cap</span><span class="row-val">$1,500</span></div>
+    </div>
+    <div class="card-setup">
+      <span class="setup-label">One-time setup</span>
+      <span class="setup-val">$897 <span class="setup-cap">(capped)</span></span>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="overage-note">⚡ Overage billed per call above limit — <strong>bill never exceeds next tier's base price</strong> · No shutoffs · No contracts</div>
+  <div class="footer-right">Month-to-month · Cancel anytime · © 2026 Kellan LLC</div>
+</div>
+
+<script>
+  const tiers = [
+    { id:'micro',   name:'MICRO',   max:19,       monthly:197, included:19,  overage:14, cap:297  },
+    { id:'starter', name:'STARTER', max:25,       monthly:297, included:25,  overage:12, cap:497  },
+    { id:'growth',  name:'GROWTH',  max:60,       monthly:497, included:60,  overage:10, cap:697  },
+    { id:'pro',     name:'PRO',     max:120,      monthly:697, included:120, overage:8,  cap:997  },
+    { id:'scale',   name:'SCALE',   max:Infinity, monthly:997, included:180, overage:6,  cap:1500 },
+  ];
+
+  function fp(val) {
+    const calls = parseInt(val);
+    const tag = document.getElementById('ft');
+    tiers.forEach(t => document.getElementById('c-' + t.id).classList.remove('active'));
+
+    if (isNaN(calls) || val === '' || calls <= 0) {
+      tag.classList.remove('visible');
+      return;
+    }
+
+    const tier = tiers.find(t => calls <= t.max);
+    if (!tier) return;
+
+    const extra = Math.max(0, calls - tier.included);
+    const bill  = tier.monthly + Math.min(extra * tier.overage, tier.cap - tier.monthly);
+
+    tag.textContent = tier.name + ' · ~$' + bill.toLocaleString() + '/mo';
+    tag.classList.add('visible');
+    document.getElementById('c-' + tier.id).classList.add('active');
+  }
+</script>
 </body>
 </html>
